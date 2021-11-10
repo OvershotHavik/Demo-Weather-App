@@ -10,7 +10,14 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var isNight = false
-    
+    @State private var weatherArray = [
+        WeatherModel(dayOfWeek: "TUE", imageName: "cloud.sun.fill", temp: 74),
+        WeatherModel(dayOfWeek: "WED", imageName: "cloud.sun.rain.fill", temp: 78),
+        WeatherModel(dayOfWeek: "THU", imageName: "wind", temp: 68),
+        WeatherModel(dayOfWeek: "FRI", imageName: "sun.max.fill", temp: 80),
+        WeatherModel(dayOfWeek: "SAT", imageName: "sun.max.fill", temp: 81),
+        WeatherModel(dayOfWeek: "SUN", imageName: "cloud.sun.fill", temp: 74)
+    ]
     var body: some View {
         ZStack{
             BackgroundView(isNight: isNight)
@@ -21,22 +28,12 @@ struct ContentView: View {
                                 temp: isNight ? 55: 76)
                 
                 .padding(.bottom, 40)
-                HStack(spacing: 25){
-                    WeatherDayView(dayOfWeek: "TUE",
-                                   imageName: "cloud.sun.fill",
-                                   temp: 74)
-                    WeatherDayView(dayOfWeek: "WED",
-                                   imageName: "cloud.sun.rain.fill",
-                                   temp: 78)
-                    WeatherDayView(dayOfWeek: "THU",
-                                   imageName: "wind",
-                                   temp: 68)
-                    WeatherDayView(dayOfWeek: "FRI",
-                                   imageName: "cloud.fog.fill",
-                                   temp: 65)
-                    WeatherDayView(dayOfWeek: "SAT",
-                                   imageName: "sun.max.fill",
-                                   temp: 80)
+                HStack(spacing: 15){
+                    ForEach(weatherArray) { day in
+                        WeatherDayView(dayOfWeek: day.dayOfWeek,
+                                       imageName: day.imageName,
+                                       temp: day.temp)
+                    }
                 }
                 Spacer()
                 Button {
